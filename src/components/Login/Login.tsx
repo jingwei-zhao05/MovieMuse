@@ -1,6 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { loginFields } from "../../constants/formFields";
 import Input from "../Input/Input";
+import FormAction from "../FormAction/FormAction";
+import FormExtra from "../FormExtra/FormExtra";
 import "./Login.scss";
 
 const fields = loginFields;
@@ -13,6 +15,14 @@ export default function Login() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setLoginState({ ...loginState, [e.target.id]: e.target.value });
   };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    authenticateUser();
+  };
+
+  //Handle Login API Integration here
+  const authenticateUser = () => {};
 
   return (
     <form className="login-form">
@@ -33,6 +43,13 @@ export default function Login() {
           />
         ))}
       </div>
+      <FormExtra />
+      <FormAction
+        handleSubmit={handleSubmit}
+        text="Login"
+        type="Button"
+        action=""
+      />
     </form>
   );
 }

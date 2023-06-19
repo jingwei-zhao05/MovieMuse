@@ -1,26 +1,22 @@
+import "./FormExtra.scss";
+
 export default function FormExtra() {
   return (
-    <div className="flex items-center justify-between ">
-      <div className="flex items-center">
+    <div className="form-extra">
+      <div className="form-extra__checkbox">
         <input
           id="remember-me"
           name="remember-me"
           type="checkbox"
-          className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+          className="form-extra__input"
         />
-        <label
-          htmlFor="remember-me"
-          className="ml-2 block text-sm text-gray-900"
-        >
+        <label htmlFor="remember-me" className="form-extra__label">
           Remember me
         </label>
       </div>
 
-      <div className="text-sm">
-        <a
-          href="#"
-          className="font-medium text-purple-600 hover:text-purple-500"
-        >
+      <div className="form-extra__text">
+        <a href="#" className="form-extra__link">
           Forgot your password?
         </a>
       </div>
