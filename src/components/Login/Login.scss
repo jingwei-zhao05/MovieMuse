@@ -1,0 +1,12 @@
+.login-form {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  --space-y-reverse: 0;
+  margin-top: calc(2rem * calc(1 - var(--space-y-reverse)));
+  margin-bottom: calc(2rem * var(--space-y-reverse));
+
+  &__container {
+    margin-top: -1px;
+    margin-bottom: -1px;
+  }
+}
