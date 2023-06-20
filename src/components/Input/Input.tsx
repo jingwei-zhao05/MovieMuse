@@ -10,7 +10,7 @@ interface InputProps {
   type: string;
   isRequired: boolean;
   placeholder: string;
-  customClass: string;
+  autoComplete: string;
 }
 
 export default function Input({
@@ -23,6 +23,7 @@ export default function Input({
   type,
   isRequired,
   placeholder,
+  autoComplete,
 }: InputProps) {
   return (
     <div className="input">
@@ -38,6 +39,7 @@ export default function Input({
         required={isRequired}
         className="input__value"
         placeholder={placeholder}
+        autoComplete={autoComplete}
       />
     </div>
   );

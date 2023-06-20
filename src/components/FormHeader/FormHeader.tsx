@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "../../assets/logos/logo.jpg";
 import "./FormHeader.scss";
 
 interface FormHeaderProps {
@@ -17,11 +18,7 @@ export default function FormHeader({
   return (
     <div className="form-header">
       <div className="form-header__logo">
-        <img
-          className="form-header__img"
-          alt=""
-          src="https://ik.imagekit.io/pibjyepn7p9/Lilac_Navy_Simple_Line_Business_Logo_CGktk8RHK.png?ik-sdk-version=javascript-1.4.3&updatedAt=1649962071315"
-        />
+        <img className="form-header__img" alt="" src={logo} />
       </div>
       <h2 className="form-header__title">{heading}</h2>
       <p className="form-header__description">

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupFields } from "../../constants/formFields";
-import FormAction from "../../components/FormAction/FormAction";
-import Input from "../../components/Input/Input";
+import FormAction from "../FormAction/FormAction";
+import Input from "../Input/Input";
 import axios from "axios";
 import { postUserEndpoint } from "../../utils/api";
-import "./Signup.scss";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./Signup.scss";
 
 const fields = signupFields;
 let fieldsState: { [key: string]: string } = {};
@@ -36,6 +36,11 @@ export default function Signup() {
       validationErrors.password = "User password field required";
       toast.error(validationErrors.password);
     }
+    if (signupState.password.length < 8) {
+      validationErrors.password =
+        "User password can not less than 8 characters";
+      toast.error(validationErrors.password);
+    }
     if (signupState.password !== signupState.confirmPassword) {
       validationErrors.confirmPassword =
         "Password and confirm password do not match";
@@ -49,8 +54,8 @@ export default function Signup() {
           password: signupState.password,
         })
         .then(() => {
-          navigate("/login");
           toast.success("Account created successfully!");
+          navigate("/login");
         })
         .catch((error) => {
           toast.error("Account creation failed. Please try again.");
@@ -80,7 +85,7 @@ export default function Signup() {
             type={field.type}
             isRequired={field.isRequired}
             placeholder={field.placeholder}
-            customClass=""
+            autoComplete={field.autoComplete}
           />
         ))}
         <FormAction

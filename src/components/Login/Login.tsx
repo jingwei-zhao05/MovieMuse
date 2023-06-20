@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginFields } from "../../constants/formFields";
 import Input from "../Input/Input";
 import FormAction from "../FormAction/FormAction";
 import FormExtra from "../FormExtra/FormExtra";
+import axios from "axios";
+import { userLoginEndpoint } from "../../utils/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 
 const fields = loginFields;
@@ -11,21 +16,34 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Login() {
   const [loginState, setLoginState] = useState(fieldsState);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setLoginState({ ...loginState, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    authenticateUser();
+
+    // grab the values from the form
+    const email = loginState.email;
+    const password = loginState.password;
+
+    // send an axios POST request
+    try {
+      const response = await axios.post(userLoginEndpoint, {
+        email,
+        password,
+      });
+      sessionStorage.setItem("authToken", response.data.token);
+      navigate("/movie-select");
+    } catch (error) {
+      toast.error("Invalid user email or password");
+    }
   };
 
-  //Handle Login API Integration here
-  const authenticateUser = () => {};
-
   return (
-    <form className="login-form">
+    <form className="login-form" onSubmit={handleSubmit}>
       <div className="login-form__container">
         {fields.map((field) => (
           <Input
@@ -39,7 +57,7 @@ export default function Login() {
             type={field.type}
             isRequired={field.isRequired}
             placeholder={field.placeholder}
-            customClass="Input__login"
+            autoComplete={field.autoComplete}
           />
         ))}
       </div>
