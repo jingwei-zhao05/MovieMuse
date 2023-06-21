@@ -1,0 +1,43 @@
+.movies-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+
+  &__item {
+    width: 12rem;
+    height: 18rem;
+    margin: 1.5rem;
+    list-style: none;
+  }
+
+  &__img {
+    width: 11rem;
+    // height: 20rem;
+    object-fit: cover;
+    border-radius: 0.625rem;
+    padding: 0;
+  }
+
+  &__img--selected {
+    border: 2px solid #7fffd4;
+    box-shadow: 1px 2px 3px 4px rgba(20, 20, 20, 0.4);
+  }
+
+  &__title {
+    margin: 0.5rem;
+    padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-align: center;
+  }
+
+  &__year {
+    margin: 0 0.5rem;
+    padding: 0;
+    text-align: center;
+  }
+}
