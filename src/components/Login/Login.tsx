@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginFields } from "../../constants/formFields";
 import Input from "../Input/Input";
 import FormAction from "../FormAction/FormAction";
 import FormExtra from "../FormExtra/FormExtra";
 import axios from "axios";
-import { userLoginEndpoint } from "../../utils/api";
+import {
+  userLoginEndpoint,
+  getUsersFavouriteMovies,
+  selectMoviesEndpoint,
+} from "../../utils/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
@@ -16,6 +20,7 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Login() {
   const [loginState, setLoginState] = useState(fieldsState);
+  const [userId, setUserId] = useState<number>(0);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -31,14 +36,38 @@ export default function Login() {
 
     // send an axios POST request
     try {
-      const response = await axios.post(userLoginEndpoint, {
+      const response1 = await axios.post(userLoginEndpoint, {
         email,
         password,
       });
-      sessionStorage.setItem("authToken", response.data.token);
-      navigate("/movie-select");
+      sessionStorage.setItem("authToken", response1.data.token);
+
+      const response2 = await axios.get(selectMoviesEndpoint, {
+        headers: {
+          Authorization: `Bearer ${response1.data.token}`,
+        },
+      });
+      const userId = response2.data.userId;
+
+      setUserId(userId);
+
+      const response3 = await axios.get(getUsersFavouriteMovies(userId));
+      console.log(response3.data);
+
+      if (response3.data) {
+        navigate(`/${userId}/profile`);
+      }
     } catch (error) {
-      toast.error("Invalid user email or password");
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data.message;
+        if (message === "Invalid credentials") {
+          toast.error("Invalid user email or password");
+        } else {
+          navigate(`/${userId}/movie-select`);
+        }
+      } else {
+        console.error(error);
+      }
     }
   };
 

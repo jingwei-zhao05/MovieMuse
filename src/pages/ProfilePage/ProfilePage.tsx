@@ -37,6 +37,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        //first get user favourite movies from database
         if (id) {
           const res1 = await axios.get(getUsersFavouriteMovies(id));
           const newMovies: Movie[] = res1.data.map((item: Movie) => ({
@@ -52,10 +53,12 @@ export default function ProfilePage() {
           setSelectedMovies(newMovies);
           setUser(user);
 
+          //get favourite movie ids and make an array of it
           const movieIdArr: string[] = newMovies.map((movie) =>
             String(movie.movie_id)
           );
 
+          //loop through movie id to call TMDB api to get recommendation movies
           const promises = movieIdArr.map((movieId) => {
             return axios.get(recommendationsEndpoint(movieId), {
               headers: {
@@ -69,11 +72,13 @@ export default function ProfilePage() {
           const addedMovieIds: Set<number> = new Set(movieIdArr.map(Number));
 
           for (const response of responses) {
+            //removie the movie which doesn't have poster path or duplicate of favourite movies
             const movies: ExternalMovie[] = response.data.results.filter(
               (movie: { poster_path: any; id: number }) =>
                 movie.poster_path && !addedMovieIds.has(movie.id)
             );
 
+            //create a list of recommendation movies, each movie id have 4 recommendation movies
             for (let i = 0; i < Math.min(4, movies.length); i++) {
               recommendedMovies.push(movies[i]);
               addedMovieIds.add(movies[i].id);
