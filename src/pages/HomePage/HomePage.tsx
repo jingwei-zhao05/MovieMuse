@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import video from "../../assets/videos/Untitled.mp4";
+import video from "../../assets/videos/homepage-video.mp4";
 import "./HomePage.scss";
 
 export default function HomePage() {

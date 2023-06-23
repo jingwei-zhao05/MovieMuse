@@ -32,7 +32,7 @@ export default function ProfilePage() {
     []
   );
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
