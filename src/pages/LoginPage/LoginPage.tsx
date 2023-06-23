@@ -4,14 +4,16 @@ import "./LoginPage.scss";
 
 export default function LoginPage() {
   return (
-    <div className="login-page">
-      <FormHeader
-        heading="Login to your account"
-        paragraph="Don't have an account yet? "
-        linkName="Signup"
-        linkUrl="/signup"
-      />
-      <Login />
+    <div className="container">
+      <div className="login-page">
+        <FormHeader
+          heading="Login to your account"
+          paragraph="Don't have an account yet? "
+          linkName="Signup"
+          linkUrl="/signup"
+        />
+        <Login />
+      </div>
     </div>
   );
 }

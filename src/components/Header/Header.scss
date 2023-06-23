@@ -1,0 +1,133 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/_global";
+@use "../../styles/partials/typography";
+
+.header {
+  margin: 1rem;
+
+  @include tablet {
+    margin: 1.5rem 2.25rem;
+  }
+
+  @include desktop {
+    margin: 0;
+    padding: 1.5rem 2.25rem;
+    // padding-bottom: 1.5rem;
+    border-bottom: 1px solid $Mercury;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    @include tablet {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 0 auto;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+
+    @include tablet {
+      justify-content: flex-end;
+      gap: 1.5rem;
+    }
+  }
+
+  &__avatar {
+    @include avatar;
+
+    @include tablet {
+      order: 1;
+    }
+
+    @include desktop {
+      margin-left: 1rem;
+    }
+  }
+
+  //   &__button {
+  //     @include button;
+  //   }
+
+  //   &__button-icon {
+  //     @include button-icon;
+  //   }
+
+  //   &__button-input {
+  //     @include button-input;
+  //   }
+}
+
+.logo {
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  //   height: 5rem;
+  margin-bottom: 1rem;
+
+  @include tablet {
+    margin: 0;
+  }
+}
+
+.search {
+  display: flex;
+  position: relative;
+  align-items: center;
+  border: 1px solid $Mercury;
+  border-radius: 0.25rem;
+  background: $Alabaster;
+  padding: 0.75rem;
+  padding-left: 2rem;
+  color: $BrainFlix-Black;
+  height: 2.25rem;
+  flex-grow: 1;
+
+  @include tablet {
+    height: 2.5rem;
+    padding: 1rem;
+    padding-left: 2.25rem;
+    width: 15rem;
+    flex-grow: 0;
+  }
+
+  &:focus-within {
+    border: 0.125rem solid $BrainFlix-Blue;
+  }
+
+  &__icon {
+    display: flex;
+    position: absolute;
+    background: transparent;
+    left: 0.5rem;
+
+    @include tablet {
+      left: 0.75rem;
+    }
+  }
+
+  &__input {
+    outline: none;
+    border: none;
+    background: transparent;
+    cursor: text;
+
+    &::placeholder {
+      color: $BrainFlix-Black;
+    }
+  }
+}

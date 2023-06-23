@@ -1,0 +1,26 @@
+@use "./variables" as *;
+
+@mixin tablet {
+  @media screen and (min-width: $tablet-breakpoint) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop-breakpoint) {
+    @content;
+  }
+}
+
+@mixin avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: $Mercury;
+
+  @include tablet {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

@@ -6,10 +6,15 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/App.scss";
+import Header from "./components/Header/Header";
+import SideMenu from "./components/SideMenu/SideMenu";
+// import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   return (
     <BrowserRouter>
+      <Header />
+      <SideMenu />
       <Routes>
         <Route path="/" element />
         <Route path="/login" element={<LoginPage />} />
