@@ -10,6 +10,8 @@
   width: 100%;
   margin: 2rem auto;
   gap: 2rem;
+  position: relative;
+  background: transparent;
 
   @media (min-width: 640px) {
     padding: 3rem 1.5rem;

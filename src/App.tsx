@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./styles/App.scss";
 import Header from "./components/Header/Header";
 import SideMenu from "./components/SideMenu/SideMenu";
-// import Sidebar from "./components/Sidebar/Sidebar";
+import HomePage from "./pages/HomePage/HomePage";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <Header />
       <SideMenu />
       <Routes>
-        <Route path="/" element />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/:id/movie-select" element={<MoviePage />} />

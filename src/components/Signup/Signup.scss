@@ -1,4 +1,9 @@
 .signup-form {
   margin: 2rem 0;
   gap: 1.5rem;
+  background: transparent;
+
+  &__container {
+    background: transparent;
+  }
 }

@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: transparent;
 
   &__label {
     position: absolute;
@@ -26,6 +27,7 @@
     border: 1px solid #d1d5db;
     color: #111827;
     font-size: 1rem;
+
     @media (max-width: 640px) {
       font-size: 0.875rem;
     }
