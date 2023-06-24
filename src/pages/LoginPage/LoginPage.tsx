@@ -1,6 +1,6 @@
 import FormHeader from "../../components/FormHeader/FormHeader";
 import Login from "../../components/Login/Login";
-import video from "../../assets/videos/Untitled.mp4";
+import video from "../../assets/videos/homepage-video.mp4";
 import "./LoginPage.scss";
 
 export default function LoginPage() {

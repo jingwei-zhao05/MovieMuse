@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/:id/movie-select" element={<MoviePage />} />
+        <Route path="/movie-select" element={<MoviePage />} />
         <Route path="/:id/profile" element={<ProfilePage />} />
       </Routes>
       <ToastContainer position="top-center" autoClose={5000} />

@@ -63,7 +63,7 @@ export default function Login() {
         if (message === "Invalid credentials") {
           toast.error("Invalid user email or password");
         } else {
-          navigate(`/${userId}/movie-select`);
+          navigate("/movie-select");
         }
       } else {
         console.error(error);

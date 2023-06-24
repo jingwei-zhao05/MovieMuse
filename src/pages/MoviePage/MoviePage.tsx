@@ -6,6 +6,7 @@ import {
   getMoviesEndpoint,
   postMoviesEndpoing,
 } from "../../utils/api";
+import MovieCard from "../../components/MovieCard/MovieCard";
 import "./MoviePage.scss";
 
 interface Movie {
@@ -86,30 +87,47 @@ export default function Movie() {
   return isLoading ? (
     <h1>Loading...</h1>
   ) : (
-    <article>
-      <h1>Welcome {userName}! Please select movies you like:</h1>
-      <ul className="movies-list">
-        {movies.map((movie) => {
-          return (
-            <li className="movies-list__item" key={movie.id}>
-              <img
-                className={
-                  selectedMovies.includes(movie)
-                    ? "movies-list__img movies-list__img--selected"
-                    : "movies-list__img"
-                }
-                src={movie.img_src}
-                alt={movie.title}
-                onClick={() => handleMovieClick(movie)}
-              />
-              <p className="movies-list__title">{movie.title}</p>
-              <p className="movies-list__year">{movie.release_date}</p>
-            </li>
-          );
-        })}
-      </ul>
+    <article className="select-movies">
+      <h1 className="select-movies__title">
+        Welcome {userName}! Please select 5 movies you like:
+      </h1>
+      <div className="movies-list">
+        {movies.map((movie) => (
+          <MovieCard
+            className={
+              selectedMovies.includes(movie)
+                ? "movie-card movie-card--selected"
+                : "movie-card"
+            }
+            key={movie.id}
+            title={movie.title}
+            id={movie.id}
+            imgSrc={movie.img_src}
+            releaseDate={movie.release_date}
+            handleClick={() => handleMovieClick(movie)}
+          />
+        ))}
+      </div>
+      {/* // return (
+            // <li className="movies-list__item" key={movie.id}>
+            //   <img
+            //     className={
+            //       selectedMovies.includes(movie)
+            //         ? "movies-list__img movies-list__img--selected"
+            //         : "movies-list__img"
+            //     }
+            //     src={movie.img_src}
+            //     alt={movie.title}
+            //     onClick={() => handleMovieClick(movie)}
+            //   />
+            //   <p className="movies-list__title">{movie.title}</p>
+            //   <p className="movies-list__year">{movie.release_date}</p>
+            // </li>
+        //   );
+        // })}
+          </div> */}
       <button
-        className="games__button"
+        className="movie-select__button"
         onClick={handleClick}
         disabled={selectedMovies.length < 5}
       >

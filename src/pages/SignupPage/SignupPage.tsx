@@ -1,6 +1,6 @@
 import FormHeader from "../../components/FormHeader/FormHeader";
 import Signup from "../../components/Signup/Signup";
-import video from "../../assets/videos/Untitled.mp4";
+import video from "../../assets/videos/homepage-video.mp4";
 import "./SignupPage.scss";
 
 export default function SignupPage() {

@@ -1,20 +1,24 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles//partials/variables" as *;
+
 .video {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-}
-.overlay {
-  position: absolute;
-  top: 94px;
-  left: 0;
   width: 100%;
   height: 100%;
-  //   background: #03a9f4;
-  mix-blend-mode: overlay;
+  object-fit: cover;
+  // z-index: -1;
 }
+// .overlay {
+//   position: absolute;
+//   top: 94px;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background: #c2e0ef;
+//   mix-blend-mode: overlay;
+// }
 
 .homepage {
   display: flex;
@@ -25,35 +29,33 @@
   &__button-container {
     background: transparent;
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
+
+    @include tablet {
+      gap: 2rem;
+    }
   }
 
   &__button {
-    display: inline-block;
-    font-size: 1em;
-    background-color: #7c3aed;
-    padding: 10px 30px;
     text-transform: uppercase;
     text-decoration: none;
-    font-weight: 500;
-    margin-top: 10px;
-    color: #111;
     letter-spacing: 2px;
     transition: 0.2s;
-
     display: flex;
     justify-content: center;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    align-items: center;
+    padding: 0.5rem 1rem;
     border: 1px solid transparent;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 500;
     border-radius: 0.375rem;
     color: #ffffff;
     background-color: #7c3aed;
     margin-top: 2.5rem;
+
+    @include tablet {
+      font-size: 1rem;
+    }
 
     &:focus {
       outline: none;
@@ -67,43 +69,63 @@
       background-color: #6b2cbb;
     }
   }
-}
-.text {
-  top: 20rem;
-  background: transparent;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  z-index: 10;
-  margin-top: auto;
-}
+  &__text {
+    top: 5rem;
+    padding: 1rem;
+    background: transparent;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+    margin-top: auto;
 
-.text h2 {
-  font-size: 5em;
-  background: transparent;
+    @include tablet {
+      top: 10rem;
+      padding: 2rem;
+    }
+  }
 
-  font-weight: 800;
-  color: #fff;
-  line-height: 1em;
-  text-transform: uppercase;
-}
-.text h3 {
-  background: transparent;
-  font-size: 4em;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1em;
-  text-transform: uppercase;
-}
-.text p {
-  background: transparent;
+  &__title {
+    font-size: 2.5rem;
+    background: transparent;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1em;
+    text-transform: uppercase;
 
-  font-size: 1.1em;
-  color: #fff;
-  margin: 20px 0;
-  font-weight: 400;
-  max-width: 700px;
+    @include tablet {
+      font-size: 3rem;
+      line-height: 1.2em;
+    }
+  }
+
+  &__subtitle {
+    background: transparent;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1em;
+    text-transform: uppercase;
+
+    @include tablet {
+      font-size: 2.5rem;
+      line-height: 1.2em;
+    }
+  }
+
+  &__description {
+    background: transparent;
+    font-size: 0.875rem;
+    color: #fff;
+    margin: 1.25rem 0;
+    font-weight: 400;
+    max-width: 700px;
+
+    @include tablet {
+      font-size: 1.125rem;
+    }
+  }
 }
