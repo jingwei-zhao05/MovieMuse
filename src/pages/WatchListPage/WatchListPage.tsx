@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SideMenu from "../../components/SideMenu/SideMenu";
-import { getUsersWatchlist } from "../../utils/api";
+import { getUsersWatchlistEndpoint } from "../../utils/api";
 import axios from "axios";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import "./WatchListPage.scss";
@@ -22,7 +22,7 @@ export default function WatchListPage() {
     const fetchData = async () => {
       try {
         if (userId) {
-          const response = await axios.get(getUsersWatchlist(userId));
+          const response = await axios.get(getUsersWatchlistEndpoint(userId));
           const movies = response.data.map(
             (movie: {
               movie_id: number;

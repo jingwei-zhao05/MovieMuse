@@ -6,7 +6,11 @@ import {
   castsEndpoint,
   similarEndpoint,
 } from "../../utils/external-api";
-import { postMoviesEndpoint, postUsersWatchlist, token } from "../../utils/api";
+import {
+  postMoviesEndpoint,
+  postUsersWatchlistEndpoint,
+  token,
+} from "../../utils/api";
 import "./MoviePage.scss";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import { Carousel } from "@mantine/carousel";
@@ -139,7 +143,7 @@ export default function Movie() {
 
   function handleWatchlistClick(): void {
     axios
-      .post(postUsersWatchlist, {
+      .post(postUsersWatchlistEndpoint, {
         user_id: userId,
         movie_id: movieId,
         title: movie?.title,

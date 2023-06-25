@@ -8,12 +8,15 @@ export const getUserIdbyEmailEndpoint = (email: string) =>
 export const selectMoviesEndpoint = `${getUsersEndpoint}/select-movies`;
 export const getMoviesEndpoint = `${API_URL}/movies`;
 export const postMoviesEndpoint = getMoviesEndpoint;
-export const getUsersFavouriteMovies = (id: string) =>
+export const getUsersFavMoviesEndpoint = (id: string) =>
   `${getUsersEndpoint}/${id}`;
-export const getUsersWatchlist = (id: string) =>
+export const getUsersWatchlistEndpoint = (id: string) =>
   `${getMoviesEndpoint}/${id}/watchlist`;
-export const postUsersWatchlist = `${getMoviesEndpoint}/watchlist`;
-
+export const postUsersWatchlistEndpoint = `${getMoviesEndpoint}/watchlist`;
+export const deleteUsersFavMoviesEndpoint = (userId: string, movieId: string) =>
+  `${getMoviesEndpoint}/${userId}/${movieId}`;
+export const deleteUsersWatchlistEndpoint = (userId: string, movieId: string) =>
+  `${getMoviesEndpoint}/${userId}/watchlist/${movieId}`;
 export const token =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMjgxM2ZiMmE1ZWEyNzA3NmM5MTFmMWUx" +
   "NjdkMmNlOSIsInN1YiI6IjY0ODg3NjljNmY4ZDk1MDEwMjNkYzVlZiIsInNjb3Blc" +

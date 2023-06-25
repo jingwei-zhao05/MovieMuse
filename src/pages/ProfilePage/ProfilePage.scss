@@ -37,3 +37,39 @@
     display: block;
   }
 }
+
+.remove-icon {
+  position: absolute;
+  top: 0.15rem;
+  right: 0.15rem;
+  border: none;
+  background: rgba(202, 199, 199, 0.533);
+  border-radius: 0.25rem;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(222, 56, 10, 0.535);
+  }
+
+  &__img {
+    width: 1.8rem;
+  }
+
+  &__message {
+    display: none;
+    position: absolute;
+    top: 2.3rem;
+    right: -2.5rem;
+    background: #fff;
+    padding: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.875rem;
+    z-index: 1;
+  }
+
+  &:hover + &__message {
+    display: block;
+  }
+}

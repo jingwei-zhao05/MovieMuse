@@ -2,19 +2,21 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import {
-  getUsersFavouriteMovies,
-  postUsersWatchlist,
+  getUsersFavMoviesEndpoint,
+  postUsersWatchlistEndpoint,
   token,
 } from "../../utils/api";
 import {
   recommendationsEndpoint,
   movieEndpoint,
 } from "../../utils/external-api";
+import { deleteUsersFavMoviesEndpoint } from "../../utils/api";
 import "./ProfilePage.scss";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import addIcon from "../../assets/icons/add-icon.svg";
+import removeIcon from "../../assets/icons/remove-icon.png";
 import { toast } from "react-toastify";
 
 interface Movie {
@@ -42,7 +44,7 @@ export default function ProfilePage() {
       try {
         //first get user favourite movies from database
         if (userId) {
-          const res1 = await axios.get(getUsersFavouriteMovies(userId));
+          const res1 = await axios.get(getUsersFavMoviesEndpoint(userId));
           const user: User = {
             userId: res1.data[0]?.user_id,
             userName: res1.data[0]?.user_name,
@@ -133,7 +135,7 @@ export default function ProfilePage() {
     posterPath: string
   ): void => {
     axios
-      .post(postUsersWatchlist, {
+      .post(postUsersWatchlistEndpoint, {
         user_id: userId,
         movie_id: movieId,
         title: title,
@@ -150,6 +152,22 @@ export default function ProfilePage() {
       });
   };
 
+  const handleRemoveClick = (
+    userId: string | undefined,
+    movieId: string
+  ): void => {
+    if (userId) {
+      axios
+        .delete(deleteUsersFavMoviesEndpoint(userId, movieId))
+        .then(() => {
+          toast.success("Successfully deleted the movie");
+        })
+        .catch((err) => {
+          toast.error(err.response.data.messagege);
+        });
+    }
+  };
+
   return (
     <article>
       <SideMenu userId={userId} />
@@ -159,10 +177,9 @@ export default function ProfilePage() {
         </h1>
         <div className="selected-movies__list">
           {selectedMovies.map((movie) => (
-            <div className="movie-card__container">
+            <div className="movie-card__container" key={movie.id}>
               <MovieCard
                 className="movie-card"
-                key={movie.id}
                 title={movie.title}
                 id={movie.id}
                 imgSrc={`https://image.tmdb.org/t/p/w185${movie.posterPath}`}
@@ -187,6 +204,17 @@ export default function ProfilePage() {
                 />
               </button>
               <div className="add-icon__message">Add to watchlist</div>
+              <button
+                className="remove-icon"
+                onClick={() => handleRemoveClick(userId, String(movie.id))}
+              >
+                <img
+                  className="remove-icon__img"
+                  src={removeIcon}
+                  alt="remove movie"
+                />
+              </button>
+              <div className="remove-icon__message">Remove movie</div>
             </div>
           ))}
         </div>
@@ -196,10 +224,9 @@ export default function ProfilePage() {
         <h1>Movies you may like: </h1>
         <div className="selected-movies__list">
           {recommendedMovies.map((movie) => (
-            <div className="movie-card__container">
+            <div className="movie-card__container" key={movie.id}>
               <MovieCard
                 className="movie-card"
-                key={movie.id}
                 title={movie.title}
                 id={movie.id}
                 imgSrc={`https://image.tmdb.org/t/p/w185${movie.posterPath}`}

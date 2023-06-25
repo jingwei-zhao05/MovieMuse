@@ -7,7 +7,7 @@ import FormExtra from "../FormExtra/FormExtra";
 import axios from "axios";
 import {
   userLoginEndpoint,
-  getUsersFavouriteMovies,
+  getUsersFavMoviesEndpoint,
   selectMoviesEndpoint,
 } from "../../utils/api";
 import { toast } from "react-toastify";
@@ -48,7 +48,7 @@ export default function Login() {
       });
       const userId = response2.data.userId;
 
-      const response3 = await axios.get(getUsersFavouriteMovies(userId));
+      const response3 = await axios.get(getUsersFavMoviesEndpoint(userId));
 
       if (response3.data) {
         navigate(`/${userId}/profile`);
