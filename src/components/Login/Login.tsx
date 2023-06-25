@@ -20,7 +20,6 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Login() {
   const [loginState, setLoginState] = useState(fieldsState);
-  const [userId, setUserId] = useState<number>(0);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -49,10 +48,7 @@ export default function Login() {
       });
       const userId = response2.data.userId;
 
-      setUserId(userId);
-
       const response3 = await axios.get(getUsersFavouriteMovies(userId));
-      console.log(response3.data);
 
       if (response3.data) {
         navigate(`/${userId}/profile`);

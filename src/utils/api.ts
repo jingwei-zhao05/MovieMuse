@@ -10,6 +10,9 @@ export const getMoviesEndpoint = `${API_URL}/movies`;
 export const postMoviesEndpoint = getMoviesEndpoint;
 export const getUsersFavouriteMovies = (id: string) =>
   `${getUsersEndpoint}/${id}`;
+export const getUsersWatchlist = (id: string) =>
+  `${getMoviesEndpoint}/${id}/watchlist`;
+export const postUsersWatchlist = `${getMoviesEndpoint}/watchlist`;
 
 export const token =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMjgxM2ZiMmE1ZWEyNzA3NmM5MTFmMWUx" +

@@ -6,7 +6,7 @@ import {
   castsEndpoint,
   similarEndpoint,
 } from "../../utils/external-api";
-import { postMoviesEndpoint, token } from "../../utils/api";
+import { postMoviesEndpoint, postUsersWatchlist, token } from "../../utils/api";
 import "./MoviePage.scss";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import { Carousel } from "@mantine/carousel";
@@ -121,7 +121,7 @@ export default function Movie() {
     navigate(`/${userId}/movie/${String(id)}`);
   };
 
-  function handleClick(): void {
+  function handleFavClick(): void {
     axios
       .post(postMoviesEndpoint, {
         user_id: userId,
@@ -129,6 +129,25 @@ export default function Movie() {
       })
       .then(() => {
         toast.success("Successfully added to favourite movies");
+      })
+      .catch((err) => {
+        if (err.response.data.message === "Movie already exist") {
+          toast.error("Movie already exist");
+        }
+      });
+  }
+
+  function handleWatchlistClick(): void {
+    axios
+      .post(postUsersWatchlist, {
+        user_id: userId,
+        movie_id: movieId,
+        title: movie?.title,
+        release_date: movie?.releaseDate,
+        poster_path: movie?.posterPath,
+      })
+      .then(() => {
+        toast.success("Successfully added to watchlist");
       })
       .catch((err) => {
         if (err.response.data.message === "Movie already exist") {
@@ -147,10 +166,15 @@ export default function Movie() {
             className="movie__poster"
             src={`https://image.tmdb.org/t/p/original${movie.posterPath}`}
           />
-          <button className="button button--movie" onClick={handleClick}>
+          <button className="button button--movie" onClick={handleFavClick}>
             Mark as Favourite
           </button>
-          <button className="button button--movie">Add to Watchlist</button>
+          <button
+            className="button button--movie"
+            onClick={handleWatchlistClick}
+          >
+            Add to Watchlist
+          </button>
           <p className="movie__tagline">{movie.tagline}</p>
           <p className="movie__overview">{movie.overview}</p>
           <p className="movie__release-date">{movie.releaseDate}</p>
