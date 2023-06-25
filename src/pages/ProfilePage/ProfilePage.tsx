@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { getUsersFavouriteMovies, token } from "../../utils/api";
+import {
+  getUsersFavouriteMovies,
+  postUsersWatchlist,
+  token,
+} from "../../utils/api";
 import {
   recommendationsEndpoint,
   movieEndpoint,
@@ -10,6 +14,8 @@ import "./ProfilePage.scss";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import SideMenu from "../../components/SideMenu/SideMenu";
+import addIcon from "../../assets/icons/add-icon.svg";
+import { toast } from "react-toastify";
 
 interface Movie {
   id: number;
@@ -98,14 +104,7 @@ export default function ProfilePage() {
               };
               recommendedMovies.push(movie);
               addedMovieIds.add(movies[i].id);
-              // if (recommendedMovies.length === 20) {
-              //   break;
-              // }
             }
-
-            // if (recommendedMovies.length === 20) {
-            //   break;
-            // }
           }
 
           setRecommendedMovies(recommendedMovies);
@@ -127,6 +126,30 @@ export default function ProfilePage() {
     navigate(`/${user.userId}/movie/${String(id)}`);
   };
 
+  const handleAddClick = (
+    movieId: number,
+    title: string,
+    releaseDate: string,
+    posterPath: string
+  ): void => {
+    axios
+      .post(postUsersWatchlist, {
+        user_id: userId,
+        movie_id: movieId,
+        title: title,
+        release_date: releaseDate,
+        poster_path: posterPath,
+      })
+      .then(() => {
+        toast.success("Successfully added to watchlist");
+      })
+      .catch((err) => {
+        if (err.response.data.message === "Movie already exist") {
+          toast.error("Movie already exist");
+        }
+      });
+  };
+
   return (
     <article>
       <SideMenu userId={userId} />
@@ -136,15 +159,35 @@ export default function ProfilePage() {
         </h1>
         <div className="selected-movies__list">
           {selectedMovies.map((movie) => (
-            <MovieCard
-              className="movie-card"
-              key={movie.id}
-              title={movie.title}
-              id={movie.id}
-              imgSrc={`https://image.tmdb.org/t/p/w185${movie.posterPath}`}
-              releaseDate={movie.releaseDate}
-              handleClick={() => handleMovieClick(movie.id)}
-            />
+            <div className="movie-card__container">
+              <MovieCard
+                className="movie-card"
+                key={movie.id}
+                title={movie.title}
+                id={movie.id}
+                imgSrc={`https://image.tmdb.org/t/p/w185${movie.posterPath}`}
+                releaseDate={movie.releaseDate}
+                handleClick={() => handleMovieClick(movie.id)}
+              />
+              <button
+                className="add-icon"
+                onClick={() =>
+                  handleAddClick(
+                    movie.id,
+                    movie.title,
+                    movie.releaseDate,
+                    movie.posterPath
+                  )
+                }
+              >
+                <img
+                  className="add-icon__img"
+                  src={addIcon}
+                  alt="add to watchlist"
+                />
+              </button>
+              <div className="add-icon__message">Add to watchlist</div>
+            </div>
           ))}
         </div>
       </div>
@@ -153,15 +196,35 @@ export default function ProfilePage() {
         <h1>Movies you may like: </h1>
         <div className="selected-movies__list">
           {recommendedMovies.map((movie) => (
-            <MovieCard
-              className="movie-card"
-              key={movie.id}
-              title={movie.title}
-              id={movie.id}
-              imgSrc={`https://image.tmdb.org/t/p/w185${movie.posterPath}`}
-              releaseDate={movie.releaseDate}
-              handleClick={() => handleMovieClick(movie.id)}
-            />
+            <div className="movie-card__container">
+              <MovieCard
+                className="movie-card"
+                key={movie.id}
+                title={movie.title}
+                id={movie.id}
+                imgSrc={`https://image.tmdb.org/t/p/w185${movie.posterPath}`}
+                releaseDate={movie.releaseDate}
+                handleClick={() => handleMovieClick(movie.id)}
+              />
+              <button
+                className="add-icon"
+                onClick={() =>
+                  handleAddClick(
+                    movie.id,
+                    movie.title,
+                    movie.releaseDate,
+                    movie.posterPath
+                  )
+                }
+              >
+                <img
+                  className="add-icon__img"
+                  src={addIcon}
+                  alt="add to watchlist"
+                />
+              </button>
+              <div className="add-icon__message">Add to watchlist</div>
+            </div>
           ))}
         </div>
       </div>

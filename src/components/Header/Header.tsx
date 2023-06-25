@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/logos/logo-transparent.png";
+import logo from "../../assets/logos/logo-white-horizontal.png";
 import searchIcon from "../../assets/icons/search.svg";
+import avatar from "../../assets/images/avatar.png";
 import "./Header.scss";
 
 export default function Header() {
@@ -19,17 +20,7 @@ export default function Header() {
               type="search"
             />
           </div>
-          <img className="header__avatar" src={""} alt="Avatar" />
-          {/* <Link className="header__button" to="/videoUpload">
-            <img
-              className="header__button-icon"
-              src={""}
-              alt="upload icon"
-            />
-            <button className="header__button-input" type="submit">
-              UPLOAD
-            </button>
-          </Link> */}
+          <img className="header__avatar" src={avatar} alt="Avatar" />
         </div>
       </div>
     </header>
