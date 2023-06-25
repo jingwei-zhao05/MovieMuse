@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/logos/logo-horizontal.jpg";
+import logo from "../../assets/logos/logo-transparent.png";
 import searchIcon from "../../assets/icons/search.svg";
 import "./Header.scss";
 

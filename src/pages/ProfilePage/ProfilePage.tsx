@@ -1,65 +1,75 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { getUsersFavouriteMovies, token } from "../../utils/api";
-import { recommendationsEndpoint } from "../../utils/external-api";
+import {
+  recommendationsEndpoint,
+  movieEndpoint,
+} from "../../utils/external-api";
 import "./ProfilePage.scss";
+import MovieCard from "../../components/MovieCard/MovieCard";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 interface Movie {
-  movie_id: number;
+  id: number;
   title: string;
-  img_src: string;
-  release_date: string;
+  posterPath: string;
+  releaseDate: string;
 }
 
 interface User {
-  user_id: number;
-  user_name: string;
-}
-
-interface ExternalMovie {
-  id: number;
-  poster_path: string;
-  title: string;
-  release_date: string;
+  userId: number;
+  userName: string;
 }
 
 export default function ProfilePage() {
-  const { id } = useParams();
+  const { userId } = useParams();
   const [selectedMovies, setSelectedMovies] = useState<Movie[]>([]);
-  const [user, setUser] = useState<User>();
-  const [recommendedMovies, setRecommendedMovies] = useState<ExternalMovie[]>(
-    []
-  );
+  const [user, setUser] = useState<User>({ userId: 0, userName: "" });
+  const [recommendedMovies, setRecommendedMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         //first get user favourite movies from database
-        if (id) {
-          const res1 = await axios.get(getUsersFavouriteMovies(id));
-          const newMovies: Movie[] = res1.data.map((item: Movie) => ({
-            movie_id: item.movie_id,
-            release_date: item.release_date,
-            title: item.title,
-            img_src: item.img_src,
-          }));
+        if (userId) {
+          const res1 = await axios.get(getUsersFavouriteMovies(userId));
           const user: User = {
-            user_id: res1.data[0]?.userId,
-            user_name: res1.data[0]?.user_name,
+            userId: res1.data[0]?.user_id,
+            userName: res1.data[0]?.user_name,
           };
-          setSelectedMovies(newMovies);
           setUser(user);
 
           //get favourite movie ids and make an array of it
-          const movieIdArr: string[] = newMovies.map((movie) =>
-            String(movie.movie_id)
+          const movieIdArr: string[] = res1.data.map(
+            (item: { movie_id: number }) => String(item.movie_id)
           );
 
+          const promises1 = movieIdArr.map((movieId) => {
+            return axios.get(movieEndpoint(movieId), {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+          });
+
+          //loop through movie id to call TMDB api to get movie info
+          const responses1 = await Promise.all(promises1);
+          const movies: Movie[] = [];
+          for (const response of responses1) {
+            const movie: Movie = {
+              ...response.data,
+              releaseDate: response.data.release_date,
+              posterPath: response.data.poster_path,
+            };
+            movies.push(movie);
+          }
+          setSelectedMovies(movies);
+
           //loop through movie id to call TMDB api to get recommendation movies
-          const promises = movieIdArr.map((movieId) => {
+          const promises2 = movieIdArr.map((movieId) => {
             return axios.get(recommendationsEndpoint(movieId), {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -67,30 +77,36 @@ export default function ProfilePage() {
             });
           });
 
-          const responses = await Promise.all(promises);
-          const recommendedMovies: ExternalMovie[] = [];
+          const responses2 = await Promise.all(promises2);
+          const recommendedMovies: Movie[] = [];
           const addedMovieIds: Set<number> = new Set(movieIdArr.map(Number));
 
-          for (const response of responses) {
+          for (const response of responses2) {
             //removie the movie which doesn't have poster path or duplicate of favourite movies
-            const movies: ExternalMovie[] = response.data.results.filter(
-              (movie: { poster_path: any; id: number }) =>
+            const movies = response.data.results.filter(
+              (movie: { poster_path: string; id: number }) =>
                 movie.poster_path && !addedMovieIds.has(movie.id)
             );
 
             //create a list of recommendation movies, each movie id have 4 recommendation movies
             for (let i = 0; i < Math.min(4, movies.length); i++) {
-              recommendedMovies.push(movies[i]);
+              const movie: Movie = {
+                ...movies[i],
+                releaseDate: movies[i].release_date,
+                posterPath: movies[i].poster_path,
+              };
+              recommendedMovies.push(movie);
               addedMovieIds.add(movies[i].id);
-              if (recommendedMovies.length === 20) {
-                break;
-              }
+              // if (recommendedMovies.length === 20) {
+              //   break;
+              // }
             }
 
-            if (recommendedMovies.length === 20) {
-              break;
-            }
+            // if (recommendedMovies.length === 20) {
+            //   break;
+            // }
           }
+
           setRecommendedMovies(recommendedMovies);
           setIsLoading(false);
         }
@@ -100,11 +116,15 @@ export default function ProfilePage() {
     };
 
     fetchData();
-  }, [id]);
+  }, [userId]);
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <LoadingPage />;
   }
+
+  const handleMovieClick = (id: number): void => {
+    navigate(`/${user.userId}/movie/${String(id)}`);
+  };
 
   return (
     <article>
@@ -112,35 +132,36 @@ export default function ProfilePage() {
         <h1 className="selected-movies__title">
           Here is your favourite movies:{" "}
         </h1>
-        <ul className="selected-movies__list">
-          {selectedMovies.map((movie) => {
-            return (
-              <li className="selected-movies__item" key={movie.movie_id}>
-                <img
-                  className="selected-movies__img"
-                  src={movie.img_src}
-                  alt={movie.title}
-                />
-              </li>
-            );
-          })}
-        </ul>
+        <div className="selected-movies__list">
+          {selectedMovies.map((movie) => (
+            <MovieCard
+              className="movie-card"
+              key={movie.id}
+              title={movie.title}
+              id={movie.id}
+              imgSrc={`https://image.tmdb.org/t/p/w185${movie.posterPath}`}
+              releaseDate={movie.releaseDate}
+              handleClick={() => handleMovieClick(movie.id)}
+            />
+          ))}
+        </div>
       </div>
+
       <div className="recommended-movies">
         <h1>Movies you may like: </h1>
-        <ul className="selected-movies__list">
-          {recommendedMovies.map((movie) => {
-            return (
-              <li className="selected-movies__item" key={movie.id}>
-                <img
-                  className="selected-movies__img"
-                  src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
-                  alt={movie.title}
-                />
-              </li>
-            );
-          })}
-        </ul>
+        <div className="selected-movies__list">
+          {recommendedMovies.map((movie) => (
+            <MovieCard
+              className="movie-card"
+              key={movie.id}
+              title={movie.title}
+              id={movie.id}
+              imgSrc={`https://image.tmdb.org/t/p/w185${movie.posterPath}`}
+              releaseDate={movie.releaseDate}
+              handleClick={() => handleMovieClick(movie.id)}
+            />
+          ))}
+        </div>
       </div>
     </article>
   );

@@ -7,7 +7,7 @@ export const getUserIdbyEmailEndpoint = (email: string) =>
   `${getUsersEndpoint}/${email}`;
 export const selectMoviesEndpoint = `${getUsersEndpoint}/select-movies`;
 export const getMoviesEndpoint = `${API_URL}/movies`;
-export const postMoviesEndpoing = getMoviesEndpoint;
+export const postMoviesEndpoint = getMoviesEndpoint;
 export const getUsersFavouriteMovies = (id: string) =>
   `${getUsersEndpoint}/${id}`;
 
