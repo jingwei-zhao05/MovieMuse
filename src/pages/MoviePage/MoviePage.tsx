@@ -12,6 +12,7 @@ import LoadingPage from "../LoadingPage/LoadingPage";
 import { Carousel } from "@mantine/carousel";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import { toast } from "react-toastify";
+import SideMenu from "../../components/SideMenu/SideMenu";
 
 interface Genre {
   id: number;
@@ -140,6 +141,7 @@ export default function Movie() {
     <>
       {movie && (
         <div className="movie">
+          <SideMenu userId={userId} />
           <h1 className="movie__title">This is {movie.title}</h1>
           <img
             className="movie__poster"

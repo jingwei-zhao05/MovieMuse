@@ -9,6 +9,7 @@ import {
 import "./ProfilePage.scss";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import LoadingPage from "../LoadingPage/LoadingPage";
+import SideMenu from "../../components/SideMenu/SideMenu";
 
 interface Movie {
   id: number;
@@ -128,6 +129,7 @@ export default function ProfilePage() {
 
   return (
     <article>
+      <SideMenu userId={userId} />
       <div className="selected-movies">
         <h1 className="selected-movies__title">
           Here is your favourite movies:{" "}

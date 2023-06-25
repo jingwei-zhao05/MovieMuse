@@ -7,21 +7,21 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/App.scss";
 import Header from "./components/Header/Header";
-import SideMenu from "./components/SideMenu/SideMenu";
 import HomePage from "./pages/HomePage/HomePage";
 import SelectMoviePage from "./pages/SelectMoviePage/SelectMoviePage";
+import WatchListPage from "./pages/WatchListPage/WatchListPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
-      <SideMenu />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/movie-select" element={<SelectMoviePage />} />
         <Route path="/:userId/profile" element={<ProfilePage />} />
+        <Route path="/:userId/watchlist" element={<WatchListPage />} />
         <Route path="/:userId/movie/:movieId" element={<MoviePage />} />
         <Route path="/showing-movies" element={<ProfilePage />} />
         <Route path="/upcoming-movies" element={<ProfilePage />} />
