@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import "./PopularMoviesPage.scss";
+import "./NowPlayingMoviesPage.scss";
 import { useParams, useNavigate } from "react-router-dom";
-import { popularMovieEndpoint } from "../../utils/external-api";
+import { nowPlaingMovieEndpoint } from "../../utils/external-api";
 import axios from "axios";
 import { postUsersWatchlistEndpoint, token } from "../../utils/api";
 import LoadingPage from "../LoadingPage/LoadingPage";
@@ -27,7 +27,7 @@ export default function NowPlayingMoviesPage() {
     const fetchData = async () => {
       try {
         if (userId) {
-          const response = await axios.get(popularMovieEndpoint, {
+          const response = await axios.get(nowPlaingMovieEndpoint, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -89,10 +89,10 @@ export default function NowPlayingMoviesPage() {
   };
 
   return (
-    <article className="popular-movies">
+    <article className="showing-movies">
       <SideMenu userId={userId} />
-      <h1 className="popular-movies__title">Popular Movies:</h1>
-      <div className="popular-movies__list">
+      <h1 className="showing-movies__title">Now Showing:</h1>
+      <div className="showing-movies__list">
         {movies.map((movie) => (
           <div className="movie-card__container" key={movie.id}>
             <MovieCard

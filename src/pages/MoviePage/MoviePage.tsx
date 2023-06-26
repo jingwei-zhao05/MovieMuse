@@ -58,7 +58,6 @@ export default function Movie() {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log(response1.data);
 
           const newMovie: Movie = {
             id: response1.data.id,

@@ -1,0 +1,41 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles//partials/variables" as *;
+
+.top-rated-movies {
+  background-color: #0c243d;
+
+  &__title {
+    color: #ede7e6;
+    padding: 1rem;
+    font-size: 1.5rem;
+
+    @include tablet {
+      font-size: 1.75rem;
+      padding: 2rem;
+    }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 0 auto;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+
+    @include tablet {
+      gap: 2.5rem;
+      padding: 2rem;
+    }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 0 auto;
+    }
+  }
+}
