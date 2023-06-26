@@ -17,8 +17,8 @@ MovieMuse offers a diverse range of movie options, including now showing, upcomi
 Install MovieMuse with npm
 
 ```bash
-  npm install
   cd moviemuse
+  npm install
 ```
 
 Start the React app:
