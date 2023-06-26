@@ -18,7 +18,7 @@ Install MovieMuse with npm
 
 ```bash
   npm install
-  cd moviemuse-client
+  cd moviemuse
 ```
 
 Start the React app:
