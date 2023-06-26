@@ -18,6 +18,7 @@ import SideMenu from "../../components/SideMenu/SideMenu";
 import addIcon from "../../assets/icons/add-icon.svg";
 import removeIcon from "../../assets/icons/remove-icon.png";
 import { toast } from "react-toastify";
+import Modal from "../../modals/DeleteFavMovieModal/DeleteFavMovieModal";
 
 interface Movie {
   id: number;
@@ -37,7 +38,62 @@ export default function ProfilePage() {
   const [user, setUser] = useState<User>({ userId: 0, userName: "" });
   const [recommendedMovies, setRecommendedMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const navigate = useNavigate();
+
+  const handleOpenModal = (movieId: any) => {
+    setIsModalOpen((prevState) => ({ ...prevState, [movieId]: true }));
+  };
+
+  const handleCloseModal = (isDeleted: boolean, movieId: any) => {
+    setIsModalOpen((prevState) => ({ ...prevState, [movieId]: false }));
+    if (isDeleted) {
+      const fetchData = async () => {
+        try {
+          //first get user favourite movies from database
+          if (userId) {
+            const res1 = await axios.get(getUsersFavMoviesEndpoint(userId));
+            const user: User = {
+              userId: res1.data[0]?.user_id,
+              userName: res1.data[0]?.user_name,
+            };
+            setUser(user);
+
+            //get favourite movie ids and make an array of it
+            const movieIdArr: string[] = res1.data.map(
+              (item: { movie_id: number }) => String(item.movie_id)
+            );
+
+            const promises1 = movieIdArr.map((movieId) => {
+              return axios.get(movieEndpoint(movieId), {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+            });
+
+            //loop through movie id to call TMDB api to get movie info
+            const responses1 = await Promise.all(promises1);
+            const movies: Movie[] = [];
+            for (const response of responses1) {
+              const movie: Movie = {
+                ...response.data,
+                releaseDate: response.data.release_date,
+                posterPath: response.data.poster_path,
+              };
+              movies.push(movie);
+            }
+            setSelectedMovies(movies);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchData();
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -152,21 +208,21 @@ export default function ProfilePage() {
       });
   };
 
-  const handleRemoveClick = (
-    userId: string | undefined,
-    movieId: string
-  ): void => {
-    if (userId) {
-      axios
-        .delete(deleteUsersFavMoviesEndpoint(userId, movieId))
-        .then(() => {
-          toast.success("Successfully deleted the movie");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.messagege);
-        });
-    }
-  };
+  // const handleRemoveClick = (
+  //   userId: string | undefined,
+  //   movieId: string
+  // ): void => {
+  //   if (userId) {
+  //     axios
+  //       .delete(deleteUsersFavMoviesEndpoint(userId, movieId))
+  //       .then(() => {
+  //         toast.success("Successfully deleted the movie");
+  //       })
+  //       .catch((err) => {
+  //         toast.error(err.response.data.messagege);
+  //       });
+  //   }
+  // };
 
   return (
     <article className="profile">
@@ -209,7 +265,8 @@ export default function ProfilePage() {
               <div className="add-icon__message">Add to watchlist</div>
               <button
                 className="remove-icon"
-                onClick={() => handleRemoveClick(userId, String(movie.id))}
+                // onClick={() => handleRemoveClick(userId, String(movie.id))}
+                onClick={() => handleOpenModal(movie.id)}
               >
                 <img
                   className="remove-icon__img"
@@ -218,6 +275,13 @@ export default function ProfilePage() {
                 />
               </button>
               <div className="remove-icon__message">Remove movie</div>
+              <Modal
+                isOpen={isModalOpen[movie.id]}
+                onClose={() => handleCloseModal(true || false, movie.id)}
+                movieId={String(movie.id)}
+                title={movie.title}
+                userId={userId}
+              />
             </div>
           ))}
         </div>

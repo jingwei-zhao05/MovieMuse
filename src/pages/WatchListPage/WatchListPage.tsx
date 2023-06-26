@@ -10,6 +10,7 @@ import MovieCard from "../../components/MovieCard/MovieCard";
 import "./WatchListPage.scss";
 import removeIcon from "../../assets/icons/remove-icon.png";
 import { toast } from "react-toastify";
+import Modal from "../../modals/DeleteWatchlistMovieModal/DeleteWatchlistMovieModal";
 
 interface Movie {
   id: number;
@@ -22,7 +23,43 @@ export default function WatchListPage() {
   const { userId } = useParams();
   const [watchlist, setWatchlist] = useState<Movie[]>([]);
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
+  const handleOpenModal = (movieId: any) => {
+    setIsModalOpen((prevState) => ({ ...prevState, [movieId]: true }));
+  };
+
+  const handleCloseModal = (isDeleted: boolean, movieId: any) => {
+    setIsModalOpen((prevState) => ({ ...prevState, [movieId]: false }));
+    if (isDeleted) {
+      const fetchData = async () => {
+        try {
+          if (userId) {
+            const response = await axios.get(getUsersWatchlistEndpoint(userId));
+            const movies = response.data.map(
+              (movie: {
+                movie_id: number;
+                title: string;
+                release_date: string;
+                poster_path: string;
+              }) => ({
+                id: movie.movie_id,
+                title: movie.title,
+                releaseDate: movie.release_date,
+                posterPath: movie.poster_path,
+              })
+            );
+            setWatchlist(movies);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -65,7 +102,7 @@ export default function WatchListPage() {
           toast.success("Successfully deleted the movie");
         })
         .catch((err) => {
-          toast.error(err.response.data.messagege);
+          toast.error(err.response.data.message);
         });
     }
   };
@@ -92,7 +129,8 @@ export default function WatchListPage() {
             />
             <button
               className="remove-icon"
-              onClick={() => handleRemoveClick(userId, String(movie.id))}
+              // onClick={() => handleRemoveClick(userId, String(movie.id))}
+              onClick={() => handleOpenModal(movie.id)}
             >
               <img
                 className="remove-icon__img"
@@ -101,6 +139,13 @@ export default function WatchListPage() {
               />
             </button>
             <div className="remove-icon__message">Remove movie</div>
+            <Modal
+              isOpen={isModalOpen[movie.id]}
+              onClose={() => handleCloseModal(true || false, movie.id)}
+              movieId={String(movie.id)}
+              title={movie.title}
+              userId={userId}
+            />
           </div>
         ))}
       </div>
