@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import {
-  deleteUsersWatchlistEndpoint,
+  // deleteUsersWatchlistEndpoint,
   getUsersWatchlistEndpoint,
 } from "../../utils/api";
 import axios from "axios";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import "./WatchListPage.scss";
 import removeIcon from "../../assets/icons/remove-icon.png";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import Modal from "../../modals/DeleteWatchlistMovieModal/DeleteWatchlistMovieModal";
 
 interface Movie {
@@ -91,21 +91,21 @@ export default function WatchListPage() {
     navigate(`/${userId}/movie/${String(id)}`);
   };
 
-  const handleRemoveClick = (
-    userId: string | undefined,
-    movieId: string
-  ): void => {
-    if (userId) {
-      axios
-        .delete(deleteUsersWatchlistEndpoint(userId, movieId))
-        .then(() => {
-          toast.success("Successfully deleted the movie");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.message);
-        });
-    }
-  };
+  // const handleRemoveClick = (
+  //   userId: string | undefined,
+  //   movieId: string
+  // ): void => {
+  //   if (userId) {
+  //     axios
+  //       .delete(deleteUsersWatchlistEndpoint(userId, movieId))
+  //       .then(() => {
+  //         toast.success("Successfully deleted the movie");
+  //       })
+  //       .catch((err) => {
+  //         toast.error(err.response.data.message);
+  //       });
+  //   }
+  // };
 
   return (
     <article className="watchlist">

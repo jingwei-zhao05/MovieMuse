@@ -10,7 +10,7 @@ import {
   recommendationsEndpoint,
   movieEndpoint,
 } from "../../utils/external-api";
-import { deleteUsersFavMoviesEndpoint } from "../../utils/api";
+// import { deleteUsersFavMoviesEndpoint } from "../../utils/api";
 import "./ProfilePage.scss";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import LoadingPage from "../LoadingPage/LoadingPage";
