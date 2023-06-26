@@ -1,31 +1,32 @@
-
 # MovieMuse
 
-MovieMuse is a web application that offers users detailed information about movies, including titles, release dates, genres, taglines, overviews, and posters. Users can create accounts, log in securely, and store their favorite movies, watchlists, and personalized preferences. They can mark movies as favorites and add them to their watchlist to keep track of movies they love and intend to watch. 
+MovieMuse is a web application that offers users detailed information about movies, including titles, release dates, genres, taglines, overviews, and posters. Users can create accounts, log in securely, and store their favorite movies, watchlists, and personalized preferences. They can mark movies as favorites and add them to their watchlist to keep track of movies they love and intend to watch.
 
 MovieMuse provides personalized movie recommendations based on the favorite movies selected by the user.MovieMuse suggests similar movies that align with the user's taste and preferences. This feature helps users discover new movies that they are likely to enjoy and enhances their movie-watching experience by offering tailored recommendations.
 
 MovieMuse offers a diverse range of movie options, including now showing, upcoming, popular, and top-rated movies. Users can explore detailed information about each movie and conveniently add their favorites to a watchlist for easy access and future viewing.
+
 ## Tech Stack
 
-**Client:** React, TypeScirpt, Sass, 
+**Client:** React, TypeScirpt, Sass,
 
 **Server:** Node.js, Express, MySQL, JWT
-
 
 ## Installation
 
 Install MovieMuse with npm
 
 ```bash
-  npm install 
+  npm install
   cd moviemuse-client
 ```
+
 Start the React app:
 
 ```bash
   npm run dev
 ```
+
 ## API Reference
 
 #### Api
@@ -50,7 +51,6 @@ Start the React app:
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of user to fetch |
 
-
 #### Post user favourite movies
 
 ```http
@@ -66,7 +66,6 @@ Start the React app:
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of user to fetch |
-
 
 #### post user watchlist
 
@@ -84,10 +83,9 @@ Start the React app:
 | :-------- | :------- | :-------------------------------- |
 | `userId`  | `string` | **Required**. Id of user to fetch |
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `movieId` | `string` | **Required**. Id of movie to fetch|
-
+| Parameter | Type     | Description                        |
+| :-------- | :------- | :--------------------------------- |
+| `movieId` | `string` | **Required**. Id of movie to fetch |
 
 #### Delete user watchlist
 
@@ -99,20 +97,17 @@ Start the React app:
 | :-------- | :------- | :-------------------------------- |
 | `userId`  | `string` | **Required**. Id of user to fetch |
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `movieId` | `string` | **Required**. Id of movie to fetch|
-
-
+| Parameter | Type     | Description                        |
+| :-------- | :------- | :--------------------------------- |
+| `movieId` | `string` | **Required**. Id of movie to fetch |
 
 ## Features
 
-- User login and signout 
+- User login and signout
 - Select favourite movies
 - Add movies to watchlist
 - Remove movies from favourite or watchlist
 - Cross platform
-
 
 ## Lessons Learned
 
@@ -127,6 +122,3 @@ During the project, one of the main challenges I faced was the learning curve of
 <img src="https://github.com/jingwei-zhao05/MovieMuse/assets/10520393/c2addbd1-2f42-4cc9-9b93-0bbdeb07b6b2" width="800">
 <img src="https://github.com/jingwei-zhao05/MovieMuse/assets/10520393/182ace5c-112c-4823-ae31-8446442d8eb3" width="800">
 <img src="https://github.com/jingwei-zhao05/MovieMuse/assets/10520393/6dba9f4e-b782-4663-a0eb-f6aca7f7261f" width="800">
-
-
-
