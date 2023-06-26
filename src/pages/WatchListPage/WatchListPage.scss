@@ -14,6 +14,11 @@
     @include tablet {
       margin: 2.5rem 2rem;
     }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 2.5rem auto;
+    }
   }
 
   &__title {
@@ -48,6 +53,11 @@
     @include tablet {
       gap: 2rem;
       margin: 2.5rem 1.5rem;
+    }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 2.5rem auto;
     }
   }
 }

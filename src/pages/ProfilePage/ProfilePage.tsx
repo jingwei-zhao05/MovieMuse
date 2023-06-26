@@ -43,6 +43,83 @@ export default function ProfilePage() {
   );
   const navigate = useNavigate();
 
+  const fetchData = async () => {
+    try {
+      //first get user favourite movies from database
+      if (userId) {
+        const res1 = await axios.get(getUsersFavMoviesEndpoint(userId));
+        const user: User = {
+          userId: res1.data[0]?.user_id,
+          userName: res1.data[0]?.user_name,
+        };
+        setUser(user);
+
+        //get favourite movie ids and make an array of it
+        const movieIdArr: string[] = res1.data.map(
+          (item: { movie_id: number }) => String(item.movie_id)
+        );
+
+        const promises1 = movieIdArr.map((movieId) => {
+          return axios.get(movieEndpoint(movieId), {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        });
+
+        //loop through movie id to call TMDB api to get movie info
+        const responses1 = await Promise.all(promises1);
+        const movies: Movie[] = [];
+        for (const response of responses1) {
+          const movie: Movie = {
+            ...response.data,
+            releaseDate: response.data.release_date,
+            posterPath: response.data.poster_path,
+          };
+          movies.push(movie);
+        }
+        setSelectedMovies(movies);
+
+        //loop through movie id to call TMDB api to get recommendation movies
+        const promises2 = movieIdArr.map((movieId) => {
+          return axios.get(recommendationsEndpoint(movieId), {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        });
+
+        const responses2 = await Promise.all(promises2);
+        const recommendedMovies: Movie[] = [];
+        const addedMovieIds: Set<number> = new Set(movieIdArr.map(Number));
+
+        for (const response of responses2) {
+          //removie the movie which doesn't have poster path or duplicate of favourite movies
+          const movies = response.data.results.filter(
+            (movie: { poster_path: string; id: number }) =>
+              movie.poster_path && !addedMovieIds.has(movie.id)
+          );
+
+          //create a list of recommendation movies, each movie id have 4 recommendation movies
+          for (let i = 0; i < Math.min(4, movies.length); i++) {
+            const movie: Movie = {
+              ...movies[i],
+              releaseDate: movies[i].release_date,
+              posterPath: movies[i].poster_path,
+            };
+            recommendedMovies.push(movie);
+            addedMovieIds.add(movies[i].id);
+          }
+        }
+
+        setRecommendedMovies(recommendedMovies);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleOpenModal = (movieId: any) => {
     setIsModalOpen((prevState) => ({ ...prevState, [movieId]: true }));
   };
@@ -50,129 +127,11 @@ export default function ProfilePage() {
   const handleCloseModal = (isDeleted: boolean, movieId: any) => {
     setIsModalOpen((prevState) => ({ ...prevState, [movieId]: false }));
     if (isDeleted) {
-      const fetchData = async () => {
-        try {
-          //first get user favourite movies from database
-          if (userId) {
-            const res1 = await axios.get(getUsersFavMoviesEndpoint(userId));
-            const user: User = {
-              userId: res1.data[0]?.user_id,
-              userName: res1.data[0]?.user_name,
-            };
-            setUser(user);
-
-            //get favourite movie ids and make an array of it
-            const movieIdArr: string[] = res1.data.map(
-              (item: { movie_id: number }) => String(item.movie_id)
-            );
-
-            const promises1 = movieIdArr.map((movieId) => {
-              return axios.get(movieEndpoint(movieId), {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              });
-            });
-
-            //loop through movie id to call TMDB api to get movie info
-            const responses1 = await Promise.all(promises1);
-            const movies: Movie[] = [];
-            for (const response of responses1) {
-              const movie: Movie = {
-                ...response.data,
-                releaseDate: response.data.release_date,
-                posterPath: response.data.poster_path,
-              };
-              movies.push(movie);
-            }
-            setSelectedMovies(movies);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      };
       fetchData();
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        //first get user favourite movies from database
-        if (userId) {
-          const res1 = await axios.get(getUsersFavMoviesEndpoint(userId));
-          const user: User = {
-            userId: res1.data[0]?.user_id,
-            userName: res1.data[0]?.user_name,
-          };
-          setUser(user);
-
-          //get favourite movie ids and make an array of it
-          const movieIdArr: string[] = res1.data.map(
-            (item: { movie_id: number }) => String(item.movie_id)
-          );
-
-          const promises1 = movieIdArr.map((movieId) => {
-            return axios.get(movieEndpoint(movieId), {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-          });
-
-          //loop through movie id to call TMDB api to get movie info
-          const responses1 = await Promise.all(promises1);
-          const movies: Movie[] = [];
-          for (const response of responses1) {
-            const movie: Movie = {
-              ...response.data,
-              releaseDate: response.data.release_date,
-              posterPath: response.data.poster_path,
-            };
-            movies.push(movie);
-          }
-          setSelectedMovies(movies);
-
-          //loop through movie id to call TMDB api to get recommendation movies
-          const promises2 = movieIdArr.map((movieId) => {
-            return axios.get(recommendationsEndpoint(movieId), {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-          });
-
-          const responses2 = await Promise.all(promises2);
-          const recommendedMovies: Movie[] = [];
-          const addedMovieIds: Set<number> = new Set(movieIdArr.map(Number));
-
-          for (const response of responses2) {
-            //removie the movie which doesn't have poster path or duplicate of favourite movies
-            const movies = response.data.results.filter(
-              (movie: { poster_path: string; id: number }) =>
-                movie.poster_path && !addedMovieIds.has(movie.id)
-            );
-
-            //create a list of recommendation movies, each movie id have 4 recommendation movies
-            for (let i = 0; i < Math.min(4, movies.length); i++) {
-              const movie: Movie = {
-                ...movies[i],
-                releaseDate: movies[i].release_date,
-                posterPath: movies[i].poster_path,
-              };
-              recommendedMovies.push(movie);
-              addedMovieIds.add(movies[i].id);
-            }
-          }
-
-          setRecommendedMovies(recommendedMovies);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     fetchData();
   }, [userId]);
 

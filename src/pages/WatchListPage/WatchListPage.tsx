@@ -27,6 +27,30 @@ export default function WatchListPage() {
     {}
   );
 
+  const fetchData = async () => {
+    try {
+      if (userId) {
+        const response = await axios.get(getUsersWatchlistEndpoint(userId));
+        const movies = response.data.map(
+          (movie: {
+            movie_id: number;
+            title: string;
+            release_date: string;
+            poster_path: string;
+          }) => ({
+            id: movie.movie_id,
+            title: movie.title,
+            releaseDate: movie.release_date,
+            posterPath: movie.poster_path,
+          })
+        );
+        setWatchlist(movies);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleOpenModal = (movieId: any) => {
     setIsModalOpen((prevState) => ({ ...prevState, [movieId]: true }));
   };
@@ -34,78 +58,16 @@ export default function WatchListPage() {
   const handleCloseModal = (isDeleted: boolean, movieId: any) => {
     setIsModalOpen((prevState) => ({ ...prevState, [movieId]: false }));
     if (isDeleted) {
-      const fetchData = async () => {
-        try {
-          if (userId) {
-            const response = await axios.get(getUsersWatchlistEndpoint(userId));
-            const movies = response.data.map(
-              (movie: {
-                movie_id: number;
-                title: string;
-                release_date: string;
-                poster_path: string;
-              }) => ({
-                id: movie.movie_id,
-                title: movie.title,
-                releaseDate: movie.release_date,
-                posterPath: movie.poster_path,
-              })
-            );
-            setWatchlist(movies);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      };
       fetchData();
     }
   };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (userId) {
-          const response = await axios.get(getUsersWatchlistEndpoint(userId));
-          const movies = response.data.map(
-            (movie: {
-              movie_id: number;
-              title: string;
-              release_date: string;
-              poster_path: string;
-            }) => ({
-              id: movie.movie_id,
-              title: movie.title,
-              releaseDate: movie.release_date,
-              posterPath: movie.poster_path,
-            })
-          );
-          setWatchlist(movies);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchData();
   }, [userId]);
 
   const handleMovieClick = (id: number): void => {
     navigate(`/${userId}/movie/${String(id)}`);
   };
-
-  // const handleRemoveClick = (
-  //   userId: string | undefined,
-  //   movieId: string
-  // ): void => {
-  //   if (userId) {
-  //     axios
-  //       .delete(deleteUsersWatchlistEndpoint(userId, movieId))
-  //       .then(() => {
-  //         toast.success("Successfully deleted the movie");
-  //       })
-  //       .catch((err) => {
-  //         toast.error(err.response.data.message);
-  //       });
-  //   }
-  // };
 
   return (
     <article className="watchlist">
@@ -129,7 +91,6 @@ export default function WatchListPage() {
             />
             <button
               className="remove-icon"
-              // onClick={() => handleRemoveClick(userId, String(movie.id))}
               onClick={() => handleOpenModal(movie.id)}
             >
               <img
