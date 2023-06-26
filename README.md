@@ -119,3 +119,14 @@ Start the React app:
 While building this project, I learned the importance of data integration and API usage in creating a comprehensive movie platform. I gained experience in handling user authentication, managing user preferences and lists, and leveraging my own database and external movie databases to provide accurate and up-to-date movie information. Additionally, I developed skills in designing responsive and visually appealing user interfaces to enhance the overall user experience.
 
 During the project, one of the main challenges I faced was the learning curve of TypeScript. Adapting to the static typing and syntax requirements of TypeScript required some adjustment, especially when integrating external libraries and managing data flow between components. To overcome this challenge, I utilized the TypeScript documentation and resources available online to deepen my understanding of the language. I also made use of TypeScript's type inference and gradually added explicit type annotations to my codebase, which helped catch potential errors early on and ensure better code quality. Additionally, leveraging TypeScript's features such as interfaces helped in maintaining consistent and predictable data structures throughout the project. Overall, through perseverance, practice, and continuous learning, I was able to overcome the TypeScript learning curve and effectively utilize its benefits in the project.
+
+## Screenshots
+
+<img src="https://github.com/jingwei-zhao05/MovieMuse/assets/10520393/80e922e8-a16d-456e-8f9c-5875ec794ffd" width="800">
+<img src="https://github.com/jingwei-zhao05/MovieMuse/assets/10520393/310eab95-2474-46c4-9198-dc3898ec3942" width="800">
+<img src="https://github.com/jingwei-zhao05/MovieMuse/assets/10520393/c2addbd1-2f42-4cc9-9b93-0bbdeb07b6b2" width="800">
+<img src="https://github.com/jingwei-zhao05/MovieMuse/assets/10520393/182ace5c-112c-4823-ae31-8446442d8eb3" width="800">
+<img src="https://github.com/jingwei-zhao05/MovieMuse/assets/10520393/6dba9f4e-b782-4663-a0eb-f6aca7f7261f" width="800">
+
+
+
