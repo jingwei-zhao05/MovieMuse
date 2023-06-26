@@ -1,18 +1,295 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles//partials/variables" as *;
+
 .movie {
-  //   margin: 1rem;
+  position: relative;
+  padding: 0;
+  margin: 0;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 43rem;
+    background-color: rgba(114, 33, 195, 0.1);
+    z-index: -5;
+
+    @include tablet {
+      height: 45rem;
+    }
+  }
+
+  &__background {
+    position: absolute;
+    width: 100%;
+    height: 43rem;
+    z-index: -10;
+    object-fit: cover;
+    opacity: 0.5;
+
+    @include tablet {
+      height: 45rem;
+    }
+  }
+
+  &__content {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    @include tablet {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 0 auto;
+      justify-content: space-between;
+    }
+  }
 
   &__poster {
-    width: 20rem;
+    width: 15rem;
     display: flex;
+    border-radius: 0.5rem;
+    margin: 1rem auto;
+    margin-top: 2.5rem;
+
+    @include tablet {
+      margin: 2rem;
+      width: 20rem;
+      order: -2;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     margin: 0 auto;
+
+    @include tablet {
+      width: 40%;
+      margin: 2rem;
+      order: -2;
+    }
+
+    @include desktop {
+      width: 50%;
+    }
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    padding: 0 1rem;
+    text-align: center;
+
+    @include tablet {
+      font-size: 1.75rem;
+    }
+  }
+
+  &__release-date {
+    font-size: 1rem;
+    padding: 0.25rem 1rem;
+    text-align: center;
+
+    @include tablet {
+      width: 45%;
+      font-size: 1.25rem;
+    }
+  }
+
+  &__tagline {
+    font-size: 1.25rem;
+    font-style: italic;
+    text-align: center;
+    margin: 1rem 0 2.5rem 0;
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__genres {
+    display: flex;
+    padding: 0 1rem;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    background-color: #0c243d;
+    width: 100%;
+    flex-wrap: wrap;
+
+    @include tablet {
+      width: 20rem;
+      background: transparent;
+      padding: 0;
+      margin: 2rem;
+    }
+  }
+
+  &__genre {
+    background-color: rgb(223, 240, 73);
+    border-radius: 0.825rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  &__overview {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: 1rem;
+    background-color: #0c243d;
+    color: #ede7e6;
+
+    @include tablet {
+      background: transparent;
+      color: black;
+      font-size: 1.125rem;
+      padding: 0;
+    }
+  }
+
+  &__cast-container {
+    background-color: #0c243d;
+  }
+
+  &__cast-title {
+    color: #ede7e6;
+    padding: 1rem;
+    font-size: 1.5rem;
+
+    @include tablet {
+      font-size: 1.75rem;
+      padding: 2rem;
+    }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 0 auto;
+      justify-content: space-between;
+    }
+  }
+
+  &__casts {
+    background-color: #0c243d;
+    padding: 1rem;
+
+    @include tablet {
+      padding: 0 2rem;
+      padding-bottom: 1rem;
+    }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 0 auto;
+      justify-content: space-between;
+    }
   }
 
   &__cast-image {
-    width: 6rem;
+    width: 5rem;
+    border-radius: 0.25rem;
+
+    @include tablet {
+      width: 6rem;
+    }
+  }
+
+  &__cast-name {
+    font-size: 0.825rem;
+    color: #ede7e6;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  &__cast-character {
+    font-size: 0.8rem;
+    color: #ede7e6;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  &__similar-container {
+    background-color: #0c243d;
+  }
+
+  &__similar-title {
+    color: #ede7e6;
+    padding: 1rem;
+    font-size: 1.5rem;
+
+    @include tablet {
+      font-size: 1.75rem;
+      padding: 2rem;
+    }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 0 auto;
+      justify-content: space-between;
+    }
+  }
+
+  &__similar {
+    background-color: #0c243d;
+    padding: 1rem;
+
+    @include tablet {
+      padding: 0 2rem;
+      padding-bottom: 1rem;
+    }
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 0 auto;
+      justify-content: space-between;
+    }
   }
 }
 
-.button--movie {
-  width: auto;
-  margin: 0;
+.button {
+  &__container {
+    display: flex;
+    padding: 2rem 0;
+    width: 100%;
+    flex-wrap: wrap;
+    background-color: #0c243d;
+
+    @include tablet {
+      width: 40%;
+      background: transparent;
+      margin: 2rem;
+      padding: 0;
+    }
+
+    @include desktop {
+      width: 50%;
+    }
+  }
+
+  &--movie {
+    width: auto;
+    margin: 0 auto;
+  }
 }

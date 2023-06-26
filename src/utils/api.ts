@@ -17,6 +17,7 @@ export const deleteUsersFavMoviesEndpoint = (userId: string, movieId: string) =>
   `${getMoviesEndpoint}/${userId}/${movieId}`;
 export const deleteUsersWatchlistEndpoint = (userId: string, movieId: string) =>
   `${getMoviesEndpoint}/${userId}/watchlist/${movieId}`;
+
 export const token =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMjgxM2ZiMmE1ZWEyNzA3NmM5MTFmMWUx" +
   "NjdkMmNlOSIsInN1YiI6IjY0ODg3NjljNmY4ZDk1MDEwMjNkYzVlZiIsInNjb3Blc" +
