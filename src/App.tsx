@@ -10,6 +10,7 @@ import Header from "./components/Header/Header";
 import HomePage from "./pages/HomePage/HomePage";
 import SelectMoviePage from "./pages/SelectMoviePage/SelectMoviePage";
 import WatchListPage from "./pages/WatchListPage/WatchListPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/upcoming-movies" element={<ProfilePage />} />
         <Route path="/popular-movies" element={<ProfilePage />} />
         <Route path="/top-rated-movies" element={<ProfilePage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer position="top-center" autoClose={5000} />
     </BrowserRouter>

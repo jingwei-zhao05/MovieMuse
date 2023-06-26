@@ -8,6 +8,7 @@ import {
 } from "../../utils/api";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import "./SelectMoviePage.scss";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 interface Movie {
   id: number;
@@ -84,11 +85,12 @@ export default function SelectMovie() {
   };
 
   return isLoading ? (
-    <h1>Loading...</h1>
+    <LoadingPage />
   ) : (
     <article className="select-movies">
       <h1 className="select-movies__title">
-        Welcome {userName}! Please select 5 movies you like:
+        Welcome <span className="select-movies__name">{userName}</span>! Please
+        select 5 movies you like:
       </h1>
       <div className="movies-list">
         {movies.map((movie) => (
@@ -108,7 +110,7 @@ export default function SelectMovie() {
         ))}
       </div>
       <button
-        className="movie-select__button"
+        className="select-movies__button"
         onClick={handleClick}
         disabled={selectedMovies.length < 5}
       >

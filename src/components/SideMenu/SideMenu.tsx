@@ -13,7 +13,7 @@ export default function SideMenu({ userId }: SideMenuProps) {
         Home
       </Link>
       <Link id="profile" className="menu-item" to={`/${userId}/profile`}>
-        Profile
+        Recommendations
       </Link>
       <Link id="watchlist" className="menu-item" to={`/${userId}/watchlist`}>
         Watchlist

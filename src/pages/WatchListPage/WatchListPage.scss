@@ -1,4 +1,53 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles//partials/variables" as *;
+
 .watchlist {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: #0c243d;
+
+  &__header {
+    background-color: #e9fff9;
+    margin: 2rem 1.5rem;
+    border-radius: 0.25rem;
+
+    @include tablet {
+      margin: 2.5rem 2rem;
+    }
+  }
+
+  &__title {
+    margin: 1rem;
+    font-size: 1.5rem;
+
+    @include tablet {
+      font-size: 2rem;
+      margin: 1.5rem;
+    }
+  }
+
+  &__text {
+    margin: 1rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+
+    @include tablet {
+      font-size: 1.5rem;
+      margin: 1.5rem;
+    }
+  }
+
+  &__movies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 1rem;
+
+    @include tablet {
+      gap: 2rem;
+      margin: 2.5rem 1.5rem;
+    }
+  }
 }

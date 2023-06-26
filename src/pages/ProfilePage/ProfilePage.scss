@@ -1,8 +1,74 @@
-.selected-movies {
+@use "../../styles/partials/mixins" as *;
+@use "../../styles//partials/variables" as *;
+
+.profile {
+  background-color: #0c243d;
+
+  &__slogan {
+    font-size: 1.5rem;
+    color: #ede7e6;
+    padding: 1.5rem;
+    text-align: center;
+
+    @include tablet {
+      font-size: 2rem;
+      padding: 2rem;
+    }
+
+    @include desktop {
+      margin: 0 auto;
+      max-width: $desktop-width;
+      padding: 2rem 0;
+    }
+  }
+}
+
+.selected-movies,
+.recommended-movies {
+  display: flex;
+  flex-direction: column;
+
+  padding: 1.5rem 1rem;
+
+  @include tablet {
+    padding: 2.25rem 2rem;
+  }
+
+  @include desktop {
+    margin: 0 auto;
+    padding: 0;
+    max-width: $desktop-width;
+  }
+
+  &__title {
+    color: #ede7e6;
+    font-size: 1.25rem;
+    padding: 1rem 0;
+
+    @include tablet {
+      font-size: 1.5rem;
+      padding: 1.5rem;
+    }
+  }
+
   &__list {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 1rem 0;
+
+    @include tablet {
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+  }
+}
+
+.recommended-movies__list {
+  @include desktop {
+    padding-bottom: 3rem;
   }
 }
 
@@ -19,6 +85,14 @@
   border: none;
   background: transparent;
   cursor: pointer;
+
+  &__img {
+    width: 1.25rem;
+
+    @include tablet {
+      width: 1.5rem;
+    }
+  }
 
   &__message {
     display: none;
@@ -52,7 +126,10 @@
   }
 
   &__img {
-    width: 1.8rem;
+    width: 1.3rem;
+    @include tablet {
+      width: 1.8rem;
+    }
   }
 
   &__message {

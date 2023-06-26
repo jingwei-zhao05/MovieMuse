@@ -169,11 +169,14 @@ export default function ProfilePage() {
   };
 
   return (
-    <article>
+    <article className="profile">
       <SideMenu userId={userId} />
+      <h1 className="profile__slogan">
+        "Discover, Explore, and Connect with the Magic of Movies"
+      </h1>
       <div className="selected-movies">
         <h1 className="selected-movies__title">
-          Here is your favourite movies:{" "}
+          You have {selectedMovies.length} favourite movies:
         </h1>
         <div className="selected-movies__list">
           {selectedMovies.map((movie) => (
@@ -221,8 +224,8 @@ export default function ProfilePage() {
       </div>
 
       <div className="recommended-movies">
-        <h1>Movies you may like: </h1>
-        <div className="selected-movies__list">
+        <h1 className="recommended-movies__title">Movies you may like: </h1>
+        <div className="recommended-movies__list">
           {recommendedMovies.map((movie) => (
             <div className="movie-card__container" key={movie.id}>
               <MovieCard

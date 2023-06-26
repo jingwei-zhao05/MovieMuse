@@ -1,0 +1,32 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/_global";
+@use "../../styles/partials/typography";
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  max-width: $desktop-width;
+
+  &__image {
+    width: 100%;
+    display: flex;
+
+    @include desktop {
+      width: $desktop-width;
+      margin: 0 auto;
+    }
+  }
+
+  &__link {
+    display: flex;
+    justify-content: center;
+    margin: 0 1rem;
+  }
+
+  &__button {
+    @include button;
+    border: none;
+    width: 15rem;
+  }
+}

@@ -2,19 +2,44 @@
 @use "../../styles//partials/variables" as *;
 
 .select-movies {
-  background-color: #162b48;
+  // background-color: #162b48;
   background-color: #0c243d;
+  padding: 1.5rem 1rem;
+
+  @include tablet {
+    padding: 2.25rem 2rem;
+  }
 
   &__title {
     color: #ede7e6;
     padding: 1.5rem;
-    font-style: italic;
     font-size: 1.25rem;
     text-align: center;
 
     @include tablet {
       padding: 2rem;
       font-size: 1.75rem;
+    }
+  }
+
+  &__button {
+    @include button;
+    width: 10rem;
+    margin: 1rem auto;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__name {
+    color: rgb(211, 208, 38);
+    font-style: italic;
+    font-size: 1.5rem;
+
+    @include tablet {
+      font-size: 2rem;
     }
   }
 }
