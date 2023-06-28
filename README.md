@@ -14,14 +14,20 @@ MovieMuse offers a diverse range of movie options, including now showing, upcomi
 
 ## Installation
 
-Install MovieMuse with npm
+1.Install MovieMuse with npm
 
 ```bash
   cd moviemuse
   npm install
 ```
 
-Start the React app:
+2.Set environment variables:
+
+```bash
+  VITE_REACT_APP_API_URL=<LOCALPATH>
+```
+
+3.Start the React app:
 
 ```bash
   npm run dev
