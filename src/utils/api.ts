@@ -1,7 +1,5 @@
-// import dotenv from "dotenv";
-// dotenv.config();
-export const API_URL = "http://localhost:8080";
-// const API_URL = process.env.REACT_APP_API_URL;
+// export const API_URL = "http://localhost:8080";
+const API_URL: string = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const getUsersEndpoint = `${API_URL}/users`;
 export const postUserEndpoint = getUsersEndpoint;
